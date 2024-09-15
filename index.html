@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brainy Bits</title>
+  <link rel="icon" href="Logo.jpg">
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: black;
+  color: yellow;
+}
+
+header {
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+main {
+  padding: 2rem;
+}
+
+h2 {
+  margin-bottom: 1rem;
+}
+
+form {
+  margin-bottom: 2rem;
+  color:#45a049;
+}
+
+label {
+  font-weight: bold;
+  color:orange;
+}
+
+input, select {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  display: block;
+  background-color:red ;
+  color: white;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#content {
+  margin-top: 1rem;
+  background-color: royalblue;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color:peachpuff;
+}
+#Copyright{
+  color:white;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Brainy Bits</h1>
+  </header>
+  
+  <main>
+    <section id="login-section">
+      <h2>Login to Access Your Learning Path</h2>
+      <form id="loginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+        <button type="submit">Login</button>
+      </form>
+    </section>
+
+    <section id="learning-section" style="display: none;">
+      <h2>Welcome, <span id="user-name"></span>!</h2>
+      <form id="classForm">
+        <label for="class">Enter Class (6 to 10):</label>
+        <input type="number" id="class" name="class" min="6" max="10" required><br>
+
+        <label for="difficulty">Select Difficulty:</label>
+        <select id="difficulty" name="difficulty">
+          <option value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="hard">Hard</option>
+        </select><br>
+
+        <label for="subject">Select Subject:</label>
+        <select id="subject" name="subject">
+          <option value="math">Math</option>
+          <option value="science">Science</option>
+          <option value="history">History</option>
+          <option value="civics">Civics</option>
+          <option value="geography">Geography</option>
+          <option value="english">English</option>
+          <option value="hindi">Hindi</option>
+          <option value="sanskrit">Sanskrit</option>
+        </select><br>
+
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+
+    <section id="learning-content">
+      <h2>Recommended Learning Path</h2>
+      <div id="content"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p id="Copyright">&copy; Brainy Bits</p>
+  </footer>
+
+  <script>
+    // Sample Learning Content based on class, difficulty, subject
+const learningMaterials = {
+  math: {
+    6: ["Basic Algebra Concepts", "Fractions", "Geometry Basics"],
+    7: ["Angles", "Triangles", "Pythagoras Theorem"],
+    8: ["Linear Equations", "Simultaneous Equations", "Quadratic Equations"],
+    9: ["Probability", "Statistics", "Advanced Probability"],
+    10: ["Calculus Basics", "Derivatives", "Integral Calculus"],
+  },
+  science: {
+    6: ["Plants and Animals", "Water Cycle", "Food Chains"],
+    7: ["Electricity", "Magnetism", "Heat"],
+    8: ["Forces", "Chemical Reactions", "Biological Systems"],
+    9: ["Atom Structure", "Organic Chemistry", "Newton's Laws"],
+    10: ["Genetics", "Electromagnetic Radiation", "Quantum Physics"],
+  },
+  history: {
+    6: ["Ancient Civilizations", "Medieval History", "Modern History"],
+    7: ["Indus Valley Civilization", "Mauryan Empire", "Gupta Empire"],
+    8: ["Medieval India", "British Expansion", "Indian Independence"],
+    9: ["Post-Independence India", "World Wars", "Cold War"],
+    10: ["Contemporary World", "Global Issues", "Historical Events"],
+  },
+  civics: {
+    6: ["Introduction to Government", "Local Government", "Rights and Duties"],
+    7: ["Indian Constitution", "Democracy", "Judicial System"],
+    8: ["Federal System", "Elections", "Public Policy"],
+    9: ["Human Rights", "National Integration", "Global Citizenship"],
+    10: ["Political Ideologies", "International Organizations", "Governance"],
+  },
+  geography: {
+    6: ["Continents and Oceans", "Maps and Globes", "Climate Zones"],
+    7: ["Landforms", "Natural Resources", "Population Distribution"],
+    8: ["Climate Change", "Geological Processes", "Human Impact"],
+    9: ["Economic Geography", "Urbanization", "Environmental Issues"],
+    10: ["Global Environmental Challenges", "Geographical Research", "Regional Studies"],
+  },
+  english: {
+    6: ["Grammar Basics", "Sentence Formation", "Reading Comprehension"],
+    7: ["Tenses", "Essay Writing", "Literary Analysis"],
+    8: ["Writing Skills", "Advanced Grammar", "Poetry and Prose"],
+    9: ["Essay Types", "Literary Devices", "Creative Writing"],
+    10: ["Advanced Essays", "Literary Themes", "Critical Thinking"],
+  },
+  hindi: {
+    6: ["अक्षर ज्ञान", "संज्ञा और सर्वनाम", "पठन अभ्यास"],
+    7: ["वाक्य निर्माण", "हिंदी कविता", "साहित्य"],
+    8: ["वर्णमाला", "हिंदी कथा", "भाषा विज्ञान"],
+    9: ["साहित्यिक विधाएँ", "भाषा प्रयोग", "आधुनिक हिंदी"],
+    10: ["हिंदी उपन्यास", "काव्यशास्त्र", "समीक्षा लेख"],
+  },
+  sanskrit: {
+    6: ["वर्णमाला", "संज्ञा और क्रिया", "वाचन अभ्यास"],
+    7: ["संज्ञा", "विधान", "साहित्य"],
+    8: ["वाक्य निर्माण", "साहित्यिक प्रकार", "संस्कृत कविता"],
+    9: ["संस्कृत नाटक", "उपाख्यान", "पाठ"],
+    10: ["संस्कृत महाकाव्य", "विवेचन", "समकालीन संस्कृत"],
+  },
+};
+
+// Function to generate random chapter
+function getRandomChapter(chapters) {
+  const randomIndex = Math.floor(Math.random() * chapters.length);
+  return chapters[randomIndex];
+}
+
+// Function to generate content
+function generateLearningPath(classNumber, difficulty, subject) {
+  const contentDiv = document.getElementById('content');
+  const chapters = learningMaterials[subject][classNumber];
+  const randomChapter = getRandomChapter(chapters);
+  contentDiv.innerHTML = `<p>For Class ${classNumber} - ${subject.toUpperCase()} (${difficulty.toUpperCase()} Level): <strong>${randomChapter}</strong></p>`;
+}
+
+// Login form event listener
+document.getElementById('loginForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  const username = document.getElementById('username').value;
+  localStorage.setItem('username', username);
+  document.getElementById('user-name').innerText = username;
+  document.getElementById('login-section').style.display = 'none';
+  document.getElementById('learning-section').style.display = 'block';
+});
+
+// Form submission event listener
+document.getElementById('classForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  const classNumber = document.getElementById('class').value;
+  const difficulty = document.getElementById('difficulty').value;
+  const subject = document.getElementById('subject').value;
+
+  if (classNumber >= 6 && classNumber <= 10) {
+    generateLearningPath(classNumber, difficulty, subject);
+  } else {
+    alert("Please enter a valid class between 6 and 10.");
+  }
+});
+
+  </script>
+</body>
+</html>
